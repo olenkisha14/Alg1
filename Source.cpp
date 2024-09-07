@@ -1,95 +1,46 @@
 #include "iostream"
+#include "string"
 using namespace std;
-#include "ArrPlatos.h"
 
-short Menu()
-{
-	short op;
-	do
-	{
-		cout << "*****MENU******" << endl;
-		cout << "1.Agregar plato" << endl;
-		cout << "2.Modificar datos de un plato" << endl;
-		cout << "3.Eliminar un plato" << endl;
-		cout << "4.Reporte de platos picantes" << endl;
-		cout << "5.Reporte de platos caros" << endl;
-		cout << "6.Mostrar todos los platos" << endl;
-		cout << "7.Salir\n";
-		cout << "Ingrese la opcion..."; cin >> op;
-	} while (op < 1 || op > 8);
-	return op;
+#include "ArrEclipse.h"
+#include <conio.h>//para comandos como getch, gotoxy, textcolor
+
+
+void Menu() {
+    cout << "----- MENU ECLIPSE -----" << endl;
+    cout << "1. Add Eclipse" << endl;
+    cout << "2. Edit Eclipse Type" << endl;
+    cout << "3. Delete Eclipse" << endl;
+    cout << "4. Print all Eclipses" << endl;
+    cout << "5. Report Eclipses in Europe" << endl;
+    cout << "6. Report Eclipses Earthquakes" << endl;
+    cout << "7. Report Eclipses in the night" << endl << endl;
 }
 
-int main()
-{
-	srand(time(nullptr));
-	ArrPlatos reporte;
+int main() {
+    srand(time(NULL)); // generardor de numeros aleatorios
+    int option, position; 
+    string type;
+    ArrEclipse* arr = new ArrEclipse();
 
-	while (true)
-	{
-		short op = Menu();
-		switch (op)
-		{
-		case 1:
-		{
-			string nombre;
-			bool esFrio, esPicante;
-			float calorias, precioPromedio;
-			cout << "Nombre del Plato: "; cin >> nombre;
-			cout << "Es Frio (1=Si, 0=No): "; cin >> esFrio;
-			cout << "Es Picante (1=Si, 0=No): "; cin >> esPicante;
-			cout << "Cantidad de Calorias: "; cin >> calorias;
-			cout << "Precio Promedio: "; cin >> precioPromedio;
-
-			//Crear un nuevo plato
-			Platos* nuevosPlatos = new Platos(nombre, esFrio, esPicante, calorias, precioPromedio);
-			reporte.agregarPlato(nuevosPlatos);
-			break;
-		}
-		case 2:
-		{
-			int indice;
-			cout << "Ingrese indice del plato a modificar: "; cin >> indice;
-			reporte.modificarPlato(indice - 1);
-			break;
-		}
-		case 3:
-		{
-			int indice;
-			cout << "Ingrese indice del plato a modificar"; cin >> indice;
-			reporte.eliminarPlato(indice - 1);
-			break;
-		}
-		case 4:
-		{
-			reporte.reportePlatoPicantes();
-			break;
-		}
-		case 5:
-		{
-			reporte.reportePlatoCaros();
-			break;
-		}
-		case 6:
-		{
-			reporte.mostrarTodosPlatos();
-			break;
-		}
-		case 7:
-		{
-			cout << "Saliendo del programa....";
-			return 0;
-		}
-
-		default:
-			break;
-		}
-
-
-		system("pause>0");
-		system("cls");
-	}
-	system("pause>0");
-	return 0;
+    while (1) {
+        Menu();
+        cout << "Input the option: "; cin >> option;
+        switch (option) {
+        case 1: arr->addEclipse(); cout << "Eclipse added" << endl; break;
+        case 2:
+            cout << "Input the position: "; cin >> position;
+            cout << "Input the new value: "; cin >> type;
+            arr->editEclipseType(position, type);
+            cout << "Eclipse edited" << endl; break;
+        case 3:
+            arr->deleteEclipse(); cout << "Eclipse deleted" << endl; break;
+        case 4: arr->printArray(); break;
+        case 5: arr->eclipsesVisiblesEurope(); break;
+        case 6: arr->eclipsesEarthquakes(); break;
+        case 7: arr->eclipsesInTheNight(); break;
+        }
+        getch();
+        system("cls");
+    }
 }
-
