@@ -1,112 +1,126 @@
 #include "iostream"
-#include "string"
+#include "string.h"
 using namespace std;
-#include "ArrContacto.h"
+#include "Hoteles.h"
+#include "ArrHoteles.h"
+/* EJERCICIO 1 
 
-short Menu() 
+1. Registrar hotel 
+2. Mostrar registro de hoteles
+3. Modificar un registro de hotel
+4. Eliminar un registro de hotel
+5. Integrantes del proyecto
+6. Reporte de hoteles con desayuno
+7. Reporte de hoteles con servicio Aeropuerto 
+8. Salir 
+Ingrese
+*/
+
+/*atributos como :
+b) Nombre del hotel
+d) Estrellas ( hasta 5 estrellas como max) 
+e) Desayuno
+f) Teléfono 
+g) Servicio
+Los métodos que debe tener la clase quedarán bajo su criterio,*/
+
+short Menu()
 {
-	short opc;
+	short op;
 	do
 	{
 		cout << "\tMENU" << endl;
-		cout << "1. Agregar contacto" << endl;
-		cout << "2. Modificar datos de un contacto" << endl;
-		cout << "3. Eliminar un contacto" << endl;
-		cout << "4. Reporte de contactos que cumplen anios en mayo" << endl;
-		cout << "5. Reporte de contactos que son varones" << endl;
-        cout << "6. Reporte de contactos con redes sociales" << endl;
-		cout << "7. Mostrar todos los contactos" << endl;
+		cout << "1. Registrar hotel" << endl;
+		cout << "2. Mostrar registro de hoteles" << endl;
+		cout << "3. Modificar un registro de hotel" << endl;
+		cout << "4. Eliminar un registro de hotel" << endl;
+		cout << "5. Integrantes del proyecto" << endl;
+		cout << "6. Reporte de hoteles con desayuno" << endl;
+		cout << "7. Reporte de hoteles con servicio Aeropuerto " << endl;
 		cout << "8. Salir" << endl;
 		cout << "Ingrese la opcion...";
-		cin >> opc;
-        cout << endl;
-	} while (opc < 1 || opc > 8);
-	return opc;
+		cin >> op;
+		cout << endl;
+	} while (op < 1 || op > 8);
+
+	return op;
 }
 
-int main() 
+int main()
 {
-    ArrContacto agenda; 
+    ArrHoteles reporte;
 
     while (true) {
-        short opc = Menu(); 
-        switch (opc)
+        short op = Menu();
+        switch (op)
         {
-        case 1: 
+        case 1:
         {
-            // Agregar un contacto
-            string nombre, telefono, sexo, facultad, email;
-            bool tieneFacebook, tieneWhatsApp;
-            Fecha fechaNacimiento;
-
-            cout << "Ingrese los datos del nuevo contacto:" << endl;
-            cout << "Nombre: "; cin >> nombre;
-            cout << "Telefono: "; cin >> telefono;
-            cout << "Sexo(F: femenino, M: masculino): "; cin >> sexo;
-            cout << "Facultad: "; cin >> facultad;
-            cout << "Fecha de Nacimiento (dd/mm/yyyy): ";
-            int dia, mes, anio;
-            cin >> dia >> mes >> anio;
-            fechaNacimiento.setDia(dia);
-            fechaNacimiento.setMes(mes);
-            fechaNacimiento.setAnio(anio);
-            cout << "Email: "; cin >> email;
-            cout << "Tiene Facebook (1=Si, 0=No): "; cin >> tieneFacebook;
-            cout << "Tiene WhatsApp (1=Si, 0=No): "; cin >> tieneWhatsApp;
-
-            // Crear y agregar el nuevo contacto a la agenda
-            Contacto* nuevoContacto = new Contacto(nombre, telefono, sexo, facultad, fechaNacimiento, email, tieneFacebook, tieneWhatsApp);
-            agenda.agregarContacto(nuevoContacto);
-            break;
+            string nombre, telefono;
+                int estrellas;
+                bool ofreceDesayuno, ofreceServicio;
+            
+                cout << "Registre los datos del Hotel:" << endl;
+                cout << "Nombre del Hotel: "; cin >> nombre;
+                cout << "Estrellas: "; cin >> estrellas;
+                cout << "Ofrece Desayuno (1=Si, 0=No): "; cin >> ofreceDesayuno;
+                cout << "Telefono: "; cin >> telefono;
+                cout << "Ofrece Servicio Aeropuerto (1=Si, 0=No): "; cin >> ofreceServicio;
+            
+                // Crear un nuevo objeto Hoteles con los nuevos datos
+                Hoteles* nuevoHoteles = new Hoteles(nombre, estrellas, ofreceDesayuno, telefono, ofreceServicio);
+                reporte.agregarHoteles(nuevoHoteles);
+                break;
         }
-        case 2: 
+        case 2:
         {
-            // Modificar un contacto
-            int indice;
-            cout << "Ingrese el indice del contacto a modificar: ";
-            cin >> indice;
-            agenda.modificarContacto(indice - 1);  // Indices son base 0 en el arreglo
+            //Mostrar datos
+            reporte.mostrarTodosHoteles();
             break;
+                        
         }
-        case 3: 
+        case 3:
         {
-            // Eliminar un contacto
-            int indice;
-            cout << "Ingrese el indice del contacto a eliminar: ";
-            cin >> indice;
-            agenda.eliminarContacto(indice - 1);  // Indices son base 0 en el arreglo
-            break;
+            //Modificar un contacto
+                int indice;
+                cout << "Ingrese el indice del hotel a modificar: ";
+                cin >> indice;
+                reporte.modificarRegistro(indice - 1);
+                break;
         }
         case 4:
         {
-            // Reporte de contactos que cumplen años en mayo
-            agenda.mostrarContactosCumpleanosMayo();
+            // Eliminar el registro de hotel
+            int indice;
+            cout << "Ingrese el indice del hotel a eliminar: ";
+            cin >> indice;
+            reporte.eliminarRegistro(indice - 1);
             break;
         }
-        case 5: 
+        case 5:
         {
-            // Reporte de contactos que son varones
-            agenda.reporteVarones();
+            // integrantes
+            reporte.integrantes();
             break;
         }
         case 6: {
-            // Reporte de contactos que tienen red social Facebook y WhatsApp
-            agenda.mostrarContactosConRedesSociales();
+            // Reporte de hoteles con desayuno
+            reporte.reporteServicioDesayuno();
             break;
         }
-        case 7: 
+        case 7:
         {
-            // Mostrar todos los contactos
-            agenda.mostrarTodosContactos();
+            //  Reporte de hoteles con servicio
+            reporte.reporteservicioAeropuerto();
             break;
         }
-        case 8: 
+        case 8:
         {
             // Salir del programa
             cout << "Saliendo..." << endl;
             return 0;
         }
-        default: 
+        default:
         {
             cout << "Opcion no valida. Intente de nuevo." << endl;
             break;
@@ -115,6 +129,6 @@ int main()
         system("pause>0");
         system("cls");
     }
-	system("pause>0");
-	return 0;
+    system("pause>0");
+    return 0;
 }
